@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -22,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.tv_xml).setOnClickListener {
             val intent = Intent(this, XmlActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<View>(R.id.tv_compose).setOnClickListener {
+            val intent = Intent(this, ComposeActivity::class.java)
             startActivity(intent)
         }
     }

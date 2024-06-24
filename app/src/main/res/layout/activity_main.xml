@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Xml"
-        app:layout_constraintBottom_toTopOf="@id/text_compose"
+        app:layout_constraintBottom_toTopOf="@id/tv_compose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
-        android:id="@+id/text_compose"
+        android:id="@+id/tv_compose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Compose"

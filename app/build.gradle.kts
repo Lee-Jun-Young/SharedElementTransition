@@ -33,7 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
+    }
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
 }
 
 dependencies {
@@ -46,4 +52,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.animation)
+
+    implementation(libs.androidx.compose.lifeCycle)
+    implementation(libs.androidx.compose.navigation)
+
+    implementation(libs.landscapist.glide)
 }
