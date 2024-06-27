@@ -1,18 +1,14 @@
 @file:OptIn(ExperimentalSharedTransitionApi::class)
 
-package com.example.sharedelementtransition
+package com.example.sharedelementtransition.compose
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,38 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.sharedelementtransition.databinding.ActivityComposeBinding
+import com.example.sharedelementtransition.ListItem
+import com.example.sharedelementtransition.testData
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
-
-class ComposeActivity : AppCompatActivity() {
-    private var binding: ActivityComposeBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        binding = ActivityComposeBinding.inflate(layoutInflater)
-
-        binding?.root?.apply {
-            ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
-                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-                insets
-            }
-
-            setContentView(this)
-
-            binding?.composeView?.apply {
-                setContent {
-                    Home()
-                }
-            }
-        }
-    }
-}
 
 @Composable
 fun SharedTransitionScope.ListScreen(
@@ -76,7 +44,7 @@ fun SharedTransitionScope.ListScreen(
         state = scrollableState
     ) {
         itemsIndexed(items.value) { index, item ->
-            testItem(
+            ListItem(
                 item = item,
                 onItemClicked = onItemClick,
                 sharedTransitionScope = sharedTransitionScope,
@@ -87,8 +55,8 @@ fun SharedTransitionScope.ListScreen(
 }
 
 @Composable
-fun testItem(
-    item: TestItem,
+fun ListItem(
+    item: ListItem,
     onItemClicked: (Int) -> Unit,
     sharedTransitionScope: SharedTransitionScope,
     animatedContentScope: AnimatedContentScope
@@ -97,7 +65,7 @@ fun testItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
                 .testTag("testItem")
                 .clickable {
                     onItemClicked(item.id)
@@ -117,9 +85,10 @@ fun testItem(
                     alignment = Alignment.Center
                 )
             )
+            Spacer(modifier = Modifier.size(8.dp))
             Column {
                 Text(
-                    text = item.name, Modifier.Companion
+                    text = item.name, Modifier
                         .sharedElement(
                             sharedTransitionScope.rememberSharedContentState(key = "text-${item.name}"),
                             animatedVisibilityScope = animatedContentScope
@@ -127,44 +96,6 @@ fun testItem(
                 )
                 Text(
                     text = item.description, Modifier
-                        .sharedElement(
-                            sharedTransitionScope.rememberSharedContentState(key = "text-${item.description}"),
-                            animatedVisibilityScope = animatedContentScope
-                        )
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun DetailScreen(
-    item: TestItem,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedContentScope: AnimatedContentScope
-) {
-    with(sharedTransitionScope) {
-        Box {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                GlideImage(
-                    modifier = Modifier
-                        .Companion
-                        .sharedElement(
-                            sharedTransitionScope.rememberSharedContentState(key = "image-${item.image}"),
-                            animatedVisibilityScope = animatedContentScope
-                        )
-                        .fillMaxWidth()
-                        .aspectRatio(16f / 9f),
-                    imageModel = { item.image })
-                Text(
-                    text = item.name, Modifier.Companion
-                        .sharedElement(
-                            sharedTransitionScope.rememberSharedContentState(key = "text-${item.name}"),
-                            animatedVisibilityScope = animatedContentScope
-                        )
-                )
-                Text(
-                    text = item.description, Modifier.Companion
                         .sharedElement(
                             sharedTransitionScope.rememberSharedContentState(key = "text-${item.description}"),
                             animatedVisibilityScope = animatedContentScope

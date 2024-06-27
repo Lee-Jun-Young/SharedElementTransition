@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".XmlActivity"
+            android:name=".xml.XmlActivity"
             android:exported="true">
 
             <intent-filter>
@@ -33,7 +33,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ComposeActivity"
+            android:name=".compose.ComposeActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".xml.DetailActivity"
             android:exported="true">
 
             <intent-filter>
